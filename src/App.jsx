@@ -17,7 +17,7 @@ import GameList from './components/GameList.jsx';
 import Profile from './components/Profile.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import ErrorBoundaryWithTranslation from './ErrorBoundary.jsx';
-import GameDetails from './components/GameDetails.jsx';
+import GameDetails from './GameDetails.jsx'; // Updated path
 import { format } from 'date-fns';
 import './App.css';
 
@@ -270,7 +270,7 @@ function App() {
                             {t('date_label')} {game.date ? format(new Date(game.date), 'MMM dd, yyyy') : t('no_date')}
                           </p>
                           <p>{t('at')} {game.time} ({game.skill})</p>
-                          <p>{t('created_by')} {game.creator?.split('@')[0] || 'Unknown'}</p>
+                          <p>{t('created_by')} {game.creator?.split('@')[0] || t('unknown_creator')}</p>
                         </div>
                       ))}
                     </Slider>

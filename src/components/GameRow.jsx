@@ -22,7 +22,9 @@ const GameRow = ({ game, user, users, joiningGameId, joinedGameId, handleJoin, h
       <span className="court-name">
         {t('at')} {game.time} ({game.skill}) - {t('created_by')} {creator}
       </span>
-      <span className="players-list">{game.players && game.players.length > 0 ? game.players.join(', ') : t('no_players')}</span>
+      <span className="players-list">
+        {game.players && game.players.length > 0 ? game.players.join(', ') : t('no_players')}
+      </span>
       {user && (
         isJoined ? (
           <div className={`joined-info ${joinedGameId === game.id ? 'fade-in' : ''}`}>
@@ -53,7 +55,7 @@ const GameRow = ({ game, user, users, joiningGameId, joinedGameId, handleJoin, h
         </a>
         <a
           href={createICalLink(game)}
-          download={`${game.title || 'Untitled Game'}.ics`}
+          download={`${game.title || t('untitled_game')}.ics`}
           className="ical-link"
           aria-label={t('download_ical_for', { title: game.title })}
         >
