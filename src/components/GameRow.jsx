@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { createCalendarLink, createICalLink, handleShareX, getGameStatus } from '../utils/gameUtils';
+import { format } from 'date-fns';
+import './GameRow.css';
 
 const GameRow = ({ game, user, users, joiningGameId, joinedGameId, handleJoin, handleDelete, handleEdit, t }) => {
   const status = getGameStatus(game);
-  const creator = users[game.creator]?.displayName || game.creator?.split('@')[0] || 'Unknown Creator';
+  const creator = users[game.creator]?.displayName || game.creator?.split('@')[0] || t('unknown_creator');
   const isCreator = user && game.creator === user.email;
   const isJoined = user && game.players && game.players.includes(user.uid);
 
@@ -14,10 +16,13 @@ const GameRow = ({ game, user, users, joiningGameId, joinedGameId, handleJoin, h
       <Link to={`/game/${game.id}`} className="game-link" aria-label={t('join_game', { title: game.title })}>
         {game.title}
       </Link>
+      <span className="game-date">
+        {t('date_label')} {game.date ? format(new Date(game.date), 'MMM dd, yyyy') : t('no_date')}
+      </span>
       <span className="court-name">
         {t('at')} {game.time} ({game.skill}) - {t('created_by')} {creator}
       </span>
-      <span className="players-list">{game.players.join(', ')}</span>
+      <span className="players-list">{game.players && game.players.length > 0 ? game.players.join(', ') : t('no_players')}</span>
       {user && (
         isJoined ? (
           <div className={`joined-info ${joinedGameId === game.id ? 'fade-in' : ''}`}>

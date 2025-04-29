@@ -1473,4 +1473,17 @@ textarea {
     width: 100%;
     max-width: 250px;
   }
+.featured-games .carousel-item .game-date {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0.5rem 0;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .featured-games .carousel-item .game-date {
+  color: #ff69b4;
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.7);
+}  
+   
 }

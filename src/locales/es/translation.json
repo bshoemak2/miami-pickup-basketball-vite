@@ -163,11 +163,8 @@
   "follow_on_x": "Síguenos en X",
   "follow_on_tiktok": "Síguenos en TikTok",
   "follow_on_instagram": "Síguenos en Instagram",
-  "what_players_say": "Lo que Dicen los Jugadores",
-  "testimonial_1_quote": "¡Esta aplicación hace que encontrar juegos de recogida sea tan fácil! ¡Me encanta el ambiente!",
-  "testimonial_1_author": "Mike D.",
-  "testimonial_2_quote": "La mejor manera de conectar con jugadores en Miami. ¡Altamente recomendado!",
-  "testimonial_2_author": "Sarah K.",
-  "testimonial_3_quote": "Diseño elegante y comunidad increíble. ¡Estoy enganchado!",
-  "testimonial_3_author": "Javier R."
+  "date_label": "Fecha:",
+  "no_date": "Sin fecha establecida",
+  "no_players": "Sin jugadores aún",
+  "unknown_creator": "Creador Desconocido"
 }

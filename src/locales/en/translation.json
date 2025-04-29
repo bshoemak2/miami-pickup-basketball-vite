@@ -163,11 +163,8 @@
   "follow_on_x": "Follow us on X",
   "follow_on_tiktok": "Follow us on TikTok",
   "follow_on_instagram": "Follow us on Instagram",
-  "what_players_say": "What Players Say",
-  "testimonial_1_quote": "This app makes finding pickup games so easy! Love the vibe!",
-  "testimonial_1_author": "Mike D.",
-  "testimonial_2_quote": "The best way to connect with ballers in Miami. Highly recommend!",
-  "testimonial_2_author": "Sarah K.",
-  "testimonial_3_quote": "Sleek design and awesome community. I'm hooked!",
-  "testimonial_3_author": "Javier R."
+  "date_label": "Date:",
+  "no_date": "No date set",
+  "no_players": "No players yet",
+  "unknown_creator": "Unknown Creator"
 }

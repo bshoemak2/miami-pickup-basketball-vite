@@ -17,7 +17,8 @@ import GameList from './components/GameList.jsx';
 import Profile from './components/Profile.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import ErrorBoundaryWithTranslation from './ErrorBoundary.jsx';
-import GameDetails from './GameDetails.jsx';
+import GameDetails from './components/GameDetails.jsx';
+import { format } from 'date-fns';
 import './App.css';
 
 function App() {
@@ -265,6 +266,9 @@ function App() {
                       {featuredGames.map(game => (
                         <div key={game.id} className="carousel-item">
                           <h3>{game.title}</h3>
+                          <p className="game-date">
+                            {t('date_label')} {game.date ? format(new Date(game.date), 'MMM dd, yyyy') : t('no_date')}
+                          </p>
                           <p>{t('at')} {game.time} ({game.skill})</p>
                           <p>{t('created_by')} {game.creator?.split('@')[0] || 'Unknown'}</p>
                         </div>
@@ -311,7 +315,7 @@ function App() {
                   </a>
                 </div>
                 <img src={playersImage} alt={t('flamingo_basketball_alt')} className="footer-image" loading="lazy" />
-                <img src={altMiamiImage} alt={t('miami_basketball_alt')} className="alt-miami-image" loading="lazy" />
+                <img src={altMiamiImage} alt={t('miami_basketball_alt')} className="footer-image" loading="lazy" />
                 <p className="sponsored-by-large">
                   {t('sponsor_text')}{' '}
                   <a href="https://shopping-assistant-5m0q.onrender.com/" target="_blank" rel="noopener noreferrer">
