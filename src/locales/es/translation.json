@@ -167,5 +167,8 @@
   "no_date": "Sin fecha establecida",
   "no_players": "Sin jugadores aún",
   "unknown_creator": "Creador Desconocido", 
-  "privacy_policy": "Política de Privacidad"
+  "privacy_policy": "Política de Privacidad",
+  "sponsor_text": "Patrocinado por",
+  "sponsor_barlitos": "Bazar de Barlito",
+  "sponsor_chuckle": "Chuckle y Chow"
 }

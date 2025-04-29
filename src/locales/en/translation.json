@@ -167,5 +167,8 @@
   "no_date": "No date set",
   "no_players": "No players yet",
   "unknown_creator": "Unknown Creator", 
-  "privacy_policy": "Privacy Policy"
+  "privacy_policy": "Privacy Policy",
+  "sponsor_text": "Sponsored by",
+  "sponsor_barlitos": "Barlito's Bazaar",
+  "sponsor_chuckle": "Chuckle and Chow"
 }

@@ -272,11 +272,7 @@ function App() {
                 <p className="sponsored-by-large">
                   {t('sponsor_text')}{' '}
                   <a href="https://shopping-assistant-5m0q.onrender.com/" target="_blank" rel="noopener noreferrer">
-                    {t('sponsor_barlitos')}
-                  </a>{' '}
-                  &{' '}
-                  <a href="https://chuckle-chow-backend.onrender.com" target="_blank" rel="noopener noreferrer">
-                    {t('sponsor_chuckle')}
+                    {t('sponsor_link')}
                   </a>
                 </p>
                 <footer className="app-footer">
