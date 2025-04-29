@@ -15,6 +15,8 @@ import Profile from './components/Profile.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import ErrorBoundaryWithTranslation from './ErrorBoundary.jsx';
 import GameDetails from './GameDetails.jsx';
+import ReactMarkdown from 'react-markdown';
+import PrivacyPolicy from './PrivacyPolicy.md?raw';
 import './App.css';
 
 function App() {
@@ -276,6 +278,7 @@ function App() {
                 <footer className="app-footer">
                   <p>{t('footer_copyright')}</p>
                   <p>{t('footer_contact')} <a href="mailto:bshoemak@mac.com">bshoemak@mac.com</a></p>
+                  <p><Link to="/privacy">{t('privacy_policy')}</Link></p>
                 </footer>
                 {showBackToTop && (
                   <button className="back-to-top" onClick={scrollToTop} aria-label={t('back_to_top')}>
@@ -289,6 +292,7 @@ function App() {
           <Route path="/game/:gameId" element={<GameDetails theme={theme} />} />
           <Route path="/profile" element={<Profile user={user} theme={theme} db={db} />} />
           <Route path="/contact" element={<ContactUs theme={theme} />} />
+          <Route path="/privacy" element={<div className="contact-us" data-theme={theme}><ReactMarkdown>{PrivacyPolicy}</ReactMarkdown></div>} />
         </Routes>
       </ErrorBoundaryWithTranslation>
     </Router>

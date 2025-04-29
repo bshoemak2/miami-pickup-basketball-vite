@@ -166,5 +166,6 @@
   "date_label": "Fecha:",
   "no_date": "Sin fecha establecida",
   "no_players": "Sin jugadores aún",
-  "unknown_creator": "Creador Desconocido"
+  "unknown_creator": "Creador Desconocido", 
+  "privacy_policy": "Política de Privacidad"
 }
