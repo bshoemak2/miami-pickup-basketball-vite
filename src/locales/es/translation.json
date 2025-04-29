@@ -166,5 +166,9 @@
   "date_label": "Fecha:",
   "no_date": "Sin fecha establecida",
   "no_players": "Sin jugadores aún",
-  "unknown_creator": "Creador Desconocido"
+  "unknown_creator": "Creador Desconocido", 
+ 
+  "no_games": "No se encontraron juegos. {message}",
+  "check_later": "Por favor, vuelve a comprobar más tarde.",
+  "untitled_game": "Juego Sin Título" 
 }

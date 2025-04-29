@@ -26,6 +26,14 @@
   color: #ff69b4;
 }
 
+.game-row .game-link:hover {
+  color: #e6005c;
+}
+
+[data-theme="dark"] .game-row .game-link:hover {
+  color: #ff85c2;
+}
+
 .game-row .game-date {
   font-size: 1.2rem;
   font-weight: bold;
@@ -74,12 +82,27 @@
   background: #ff0066;
   color: #fff;
   font-size: 0.9rem;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.3s;
 }
 
 [data-theme="dark"] .game-row .calendar-link,
 [data-theme="dark"] .game-row .ical-link,
 [data-theme="dark"] .game-row .share-button {
   background: #ff69b4;
+}
+
+.game-row .calendar-link:hover,
+.game-row .ical-link:hover,
+.game-row .share-button:hover {
+  background: #e6005c;
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .game-row .calendar-link:hover,
+[data-theme="dark"] .game-row .ical-link:hover,
+[data-theme="dark"] .game-row .share-button:hover {
+  background: #ff85c2;
 }
 
 .game-row .join-button,
@@ -93,12 +116,26 @@
   color: #fff;
   font-weight: bold;
   margin: 0.5rem 0.5rem 0.5rem 0;
+  transition: background 0.3s, transform 0.3s;
 }
 
 [data-theme="dark"] .game-row .join-button,
 [data-theme="dark"] .game-row .edit-button,
 [data-theme="dark"] .game-row .delete-button {
   background: #ff69b4;
+}
+
+.game-row .join-button:hover,
+.game-row .edit-button:hover,
+.game-row .delete-button:hover {
+  background: #e6005c;
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .game-row .join-button:hover,
+[data-theme="dark"] .game-row .edit-button:hover,
+[data-theme="dark"] .game-row .delete-button:hover {
+  background: #ff85c2;
 }
 
 .game-row .joined-info {

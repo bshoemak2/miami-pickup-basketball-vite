@@ -166,5 +166,8 @@
   "date_label": "Date:",
   "no_date": "No date set",
   "no_players": "No players yet",
-  "unknown_creator": "Unknown Creator"
+  "unknown_creator": "Unknown Creator",
+  "no_games": "No games found. {message}",
+  "check_later": "Please check back later.",
+  "untitled_game": "Untitled Game"
 }
