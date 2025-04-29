@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { auth, db, onAuthStateChanged, signOut } from './firebase';
-import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import playersImage from './images/players_1.jpg';
 import altMiamiImage from './images/alt_miami_image2.jpg';
 import { useTranslation } from 'react-i18next';
@@ -9,16 +9,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Particles } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import AuthForm from './components/AuthForm.jsx';
 import GameList from './components/GameList.jsx';
 import Profile from './components/Profile.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import ErrorBoundaryWithTranslation from './ErrorBoundary.jsx';
-import GameDetails from './GameDetails.jsx'; // Updated path
-import { format } from 'date-fns';
+import GameDetails from './GameDetails.jsx';
 import './App.css';
 
 function App() {
@@ -29,7 +25,6 @@ function App() {
   const [theme, setTheme] = useState('light');
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [showWelcomeModal, setShowWelcomeModal] = useState(!localStorage.getItem('welcomeModalShown'));
-  const [featuredGames, setFeaturedGames] = useState([]);
 
   const affiliateProducts = useMemo(() => [
     { name: 'Spalding Street Performance Outdoor Basketballs', link: 'https://amzn.to/3XGxAyO', image: 'https://m.media-amazon.com/images/I/7187crn3osS._AC_SX679_.jpg' },
@@ -82,21 +77,6 @@ function App() {
       setIsLoadingUser(false);
     });
 
-    const fetchFeaturedGames = async () => {
-      try {
-        const gamesSnapshot = await getDocs(collection(db, 'games'));
-        const games = gamesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const upcoming = games
-          .filter(game => new Date(`${game.date}T${game.time}:00`) > new Date())
-          .sort((a, b) => new Date(a.date) - new Date(b.date))
-          .slice(0, 3);
-        setFeaturedGames(upcoming);
-      } catch (err) {
-        console.error('Error fetching featured games:', err);
-      }
-    };
-    fetchFeaturedGames();
-
     let scrollTimeout;
     const handleScroll = () => {
       clearTimeout(scrollTimeout);
@@ -112,7 +92,7 @@ function App() {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeout);
     };
-  }, [db]);
+  }, []);
 
   const handleLogout = useCallback(async () => {
     try {
@@ -159,16 +139,6 @@ function App() {
     },
   }), [theme]);
 
-  const carouselSettings = useMemo(() => ({
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  }), []);
-
   console.log('Rendering App with playerName:', playerName);
 
   return (
@@ -211,11 +181,11 @@ function App() {
                   <h1>{t('welcome_to_app')}</h1>
                   <p>{t('welcome_message_1')}</p>
                   {user ? (
-                    <Link to="/profile" className="hero-cta">{t('setup_profile')}</Link>
+                    <Link to="/profile" className="hero-cta badass-cta">{t('setup_profile')}</Link>
                   ) : (
                     <button
                       onClick={() => document.querySelector('.auth-form')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="hero-cta"
+                      className="hero-cta badass-cta"
                     >
                       {t('get_started')}
                     </button>
@@ -223,7 +193,7 @@ function App() {
                 </div>
                 <div className="title-wrapper">
                   <h1>{t('app_title')}</h1>
-                  <span className="flamingo">🦩</span>
+                  <span className="flamingo interactive-flamingo">🦩</span>
                   <span className="beta">Beta</span>
                 </div>
                 <div className="header-controls">
@@ -259,25 +229,6 @@ function App() {
                     </p>
                   </div>
                 )}
-                <div className="featured-games">
-                  <h2>{t('featured_games')}</h2>
-                  {featuredGames.length > 0 ? (
-                    <Slider {...carouselSettings} className="carousel-container">
-                      {featuredGames.map(game => (
-                        <div key={game.id} className="carousel-item">
-                          <h3>{game.title}</h3>
-                          <p className="game-date">
-                            {t('date_label')} {game.date ? format(new Date(game.date), 'MMM dd, yyyy') : t('no_date')}
-                          </p>
-                          <p>{t('at')} {game.time} ({game.skill})</p>
-                          <p>{t('created_by')} {game.creator?.split('@')[0] || t('unknown_creator')}</p>
-                        </div>
-                      ))}
-                    </Slider>
-                  ) : (
-                    <p>{t('no_games', { message: t('check_later') })}</p>
-                  )}
-                </div>
                 <GameList user={user} db={db} />
                 <div className="affiliate-links">
                   <h2 className="large-heading">{t('basketball_gear')}</h2>

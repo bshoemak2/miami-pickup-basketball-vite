@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db, auth, onAuthStateChanged } from './firebase';
 import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
@@ -10,6 +10,7 @@ import './GameDetails.css';
 function GameDetails({ theme }) {
   const { t } = useTranslation();
   const { gameId } = useParams();
+  const navigate = useNavigate();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState('');
@@ -129,6 +130,28 @@ function GameDetails({ theme }) {
     }
   };
 
+  const handleEditGame = () => {
+    // Placeholder for edit functionality (e.g., navigate to an edit form)
+    toast.info(t('edit_game_placeholder'), { position: 'top-right' });
+  };
+
+  const handleDeleteGame = async () => {
+    if (!user || game.creator !== user.email) {
+      toast.error(t('only_creator_can_delete'), { position: 'top-right' });
+      return;
+    }
+    if (window.confirm(t('confirm_delete_game'))) {
+      try {
+        await deleteDoc(doc(db, 'games', gameId));
+        toast.success(t('game_deleted_success'), { position: 'top-right' });
+        navigate('/');
+      } catch (err) {
+        toast.error(t('failed_to_delete_game'), { position: 'top-right' });
+        console.error('Delete game error:', err);
+      }
+    }
+  };
+
   const createCalendarLink = () => {
     if (!game || !game.date || !game.time || typeof game.date !== 'string' || typeof game.time !== 'string') return '#';
     try {
@@ -144,10 +167,24 @@ function GameDetails({ theme }) {
   };
 
   const createICalLink = () => {
-    if (!game || !game.date || !game.time || typeof game.date !== 'string' || typeof game.time !== 'string') return '#';
+    if (
+      !game ||
+      !game.date ||
+      !game.time ||
+      typeof game.date !== 'string' ||
+      typeof game.time !== 'string' ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(game.date) ||
+      !/^\d{2}:\d{2}$/.test(game.time)
+    ) {
+      console.warn('Invalid game data for iCal link:', { game });
+      return '#';
+    }
     try {
       const startDateTime = new Date(`${game.date}T${game.time}:00`);
-      if (isNaN(startDateTime.getTime())) return '#';
+      if (isNaN(startDateTime.getTime())) {
+        console.warn('Invalid date/time combination:', { date: game.date, time: game.time });
+        return '#';
+      }
       const start = startDateTime.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       const end = new Date(startDateTime.getTime() + 3600000).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       const ics = [
@@ -187,21 +224,39 @@ function GameDetails({ theme }) {
       <p><strong>{t('players_label')}</strong> {game.players && game.players.length > 0 ? `${game.players.join(', ')} (${game.players.length}/${game.maxPlayers || 10})` : `0/${game.maxPlayers || 10}`}</p>
       <p><strong>{t('notes_label')}</strong> {game.notes || t('no_notes')}</p>
       {user && game.creator === user.email && (
-        <form onSubmit={handleUpdateNotes} className="notes-form">
-          <textarea
-            placeholder={t('notes_placeholder')}
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            aria-label={t('notes_label')}
-          />
-          <button
-            type="submit"
-            disabled={updatingNotes}
-            aria-label={updatingNotes ? t('updating') : t('update_notes')}
-          >
-            {updatingNotes ? t('updating') : t('update_notes')}
-          </button>
-        </form>
+        <>
+          <form onSubmit={handleUpdateNotes} className="notes-form">
+            <textarea
+              placeholder={t('notes_placeholder')}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              aria-label={t('notes_label')}
+            />
+            <button
+              type="submit"
+              disabled={updatingNotes}
+              aria-label={updatingNotes ? t('updating') : t('update_notes')}
+            >
+              {updatingNotes ? t('updating') : t('update_notes')}
+            </button>
+          </form>
+          <div className="game-actions">
+            <button
+              onClick={handleEditGame}
+              className="edit-button"
+              aria-label={t('edit_game')}
+            >
+              {t('edit_game')}
+            </button>
+            <button
+              onClick={handleDeleteGame}
+              className="delete-button"
+              aria-label={t('delete_game')}
+            >
+              {t('delete_game')}
+            </button>
+          </div>
+        </>
       )}
       {user && (
         game.players && game.players.includes(user.uid) ? (
