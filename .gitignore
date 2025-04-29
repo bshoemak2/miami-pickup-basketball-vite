@@ -26,3 +26,4 @@ miami_pickup.zip
 package.json.bak 
 src/App.js.bak 
 .env 
+build/ 
